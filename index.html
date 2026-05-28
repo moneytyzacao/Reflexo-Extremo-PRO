@@ -6,12 +6,7 @@
 <title>Reflexo Extremo PRO</title>
 <meta name="theme-color" content="#0f172a" />
 
-<!-- 🔥 ADSENSE GLOBAL -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5503435586364378"
-crossorigin="anonymous"></script>
-
 <style>
-/* (mantive seu CSS original intacto) */
 :root{
   --bg:#0f172a; --panel:#020617; --border:#1e293b;
   --green:#22c55e; --green2:#16a34a; --cyan:#38bdf8; --red:#ef4444;
@@ -25,97 +20,219 @@ body{
 .container{max-width:900px; margin:0 auto; padding:12px}
 h1{margin:12px 0 6px; font-size:28px}
 .sub{opacity:.8; font-size:14px}
-#hud{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:10px; font-weight:600}
-.badge{background:#020617; border:1px solid var(--border); padding:6px 10px; border-radius:999px}
+
+#hud{
+  display:flex; gap:10px; justify-content:center; flex-wrap:wrap;
+  margin-top:10px; font-weight:600
+}
+.badge{
+  background:#020617; border:1px solid var(--border);
+  padding:6px 10px; border-radius:999px
+}
 #level{color:var(--cyan)}
-#gameArea{width:100%; height:58vh; background:var(--panel); position:relative; overflow:hidden; border:2px solid var(--border); border-radius:10px; margin-top:14px;}
-.target{width:64px;height:64px;background:var(--red);border-radius:50%;position:absolute;cursor:pointer;}
+
+#gameArea{
+  width:100%; height:58vh; background:var(--panel);
+  position:relative; overflow:hidden; border:2px solid var(--border);
+  border-radius:10px; margin-top:14px;
+}
+
+.target{
+  width:64px; height:64px; background:var(--red);
+  border-radius:50%; position:absolute; cursor:pointer;
+  box-shadow:0 0 14px rgba(239,68,68,.7);
+  transition:transform .08s ease;
+}
+.target:active{ transform:scale(.92) }
+
 .controls{margin-top:12px}
-button{padding:12px 16px;margin:6px;border:none;border-radius:8px;background:var(--green);cursor:pointer;}
-input{padding:10px;margin-top:8px;border-radius:8px;border:1px solid var(--border);background:#020617;color:#fff;width:220px;}
-#endScreen{display:none;margin-top:16px}
-#adBox{margin-top:12px}
+button{
+  padding:12px 16px; margin:6px; border:none; border-radius:8px;
+  background:var(--green); color:#052e16; font-weight:700; cursor:pointer;
+}
+button:hover{ background:var(--green2) }
+.secondary{ background:#1e293b; color:#e5e7eb }
+.secondary:hover{ background:#334155 }
+
+input{
+  padding:10px; margin-top:8px; border-radius:8px; border:1px solid var(--border);
+  background:#020617; color:#fff; width:220px; max-width:80%;
+}
+
+#endScreen{ display:none; margin-top:16px }
+
+#rankingWrap{
+  display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px
+}
+.panel{
+  background:#020617; border:1px solid var(--border);
+  border-radius:10px; padding:10px
+}
+.panel h3{margin:6px 0 10px}
+ul{list-style:none; padding:0; margin:0}
+li{padding:6px 8px; border-bottom:1px dashed #1f2937}
+li:last-child{border-bottom:none}
+
+#adBox{
+  margin-top:12px; padding:10px; border:1px dashed #475569;
+  border-radius:8px; opacity:.9
+}
+
+/* Responsivo */
+@media (max-width:720px){
+  #rankingWrap{ grid-template-columns:1fr }
+  h1{font-size:24px}
+}
+
+/* Feedback de erro */
+.flash{
+  animation:flash .15s ease;
+}
+@keyframes flash{
+  0%{background:#7f1d1d}
+  100%{background:var(--bg)}
+}
 </style>
 </head>
 
 <body>
 <div class="container">
+  <h1>⚡ Reflexo Extremo PRO</h1>
+  <div class="sub">“Só 1% passa de 50 pontos. Você consegue?”</div>
 
-<h1>⚡ Reflexo Extremo PRO</h1>
-
-<div id="hud">
-  <div class="badge">Tempo: <span id="time">30</span>s</div>
-  <div class="badge">Pontos: <span id="score">0</span></div>
-  <div class="badge">Nível: <span id="level">1</span></div>
-</div>
-
-<input id="playerName" placeholder="Seu nome (obrigatório)" />
-
-<div id="gameArea"></div>
-
-<div class="controls">
-  <button id="btnPlay">JOGAR AGORA</button>
-</div>
-
-<div id="endScreen">
-  <h2>Fim de jogo</h2>
-  <p>Score: <strong id="finalScore">0</strong></p>
-
-  <!-- 💰 ANÚNCIO -->
-  <div id="adBox">
-    <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-5503435586364378"
-      data-ad-slot="SEU_AD_SLOT_AQUI"
-      data-ad-format="auto"
-      data-full-width-responsive="true"></ins>
+  <div id="hud">
+    <div class="badge">Tempo: <span id="time">30</span>s</div>
+    <div class="badge">Pontos: <span id="score">0</span></div>
+    <div class="badge">Nível: <span id="level">1</span></div>
   </div>
 
-  <button id="btnReplay">Jogar novamente</button>
+  <input id="playerName" placeholder="Seu nome (obrigatório)" />
+
+  <div id="gameArea"></div>
+
+  <div class="controls">
+    <button id="btnPlay">JOGAR AGORA</button>
+    <button class="secondary" id="btnResetLocal">Limpar Ranking Local</button>
+  </div>
+
+  <div id="endScreen">
+    <h2>Fim de jogo</h2>
+    <p>Score: <strong id="finalScore">0</strong></p>
+
+    <div id="adBox">🔥 Espaço para AdSense (insira seu script aqui)</div>
+
+    <div class="controls">
+      <button id="btnSave">Salvar Ranking Global</button>
+      <button class="secondary" id="btnShare">Compartilhar</button>
+      <button id="btnReplay">Jogar novamente</button>
+    </div>
+  </div>
+
+  <div id="rankingWrap">
+    <div class="panel">
+      <h3>🏆 Ranking Global</h3>
+      <ul id="rankingGlobal"></ul>
+    </div>
+    <div class="panel">
+      <h3>📱 Ranking Local</h3>
+      <ul id="rankingLocal"></ul>
+    </div>
+  </div>
 </div>
 
-</div>
+<!-- FIREBASE (substitua as chaves) -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getFirestore, collection, addDoc, getDocs, query, orderBy, limit
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "SUA_API_KEY",
+  authDomain: "SEU_AUTH_DOMAIN",
+  projectId: "SEU_PROJECT_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+window.db = getFirestore(app);
+
+// expor helpers pro script abaixo
+window._fb = { collection, addDoc, getDocs, query, orderBy, limit };
+</script>
 
 <script>
-let score=0,time=30,level=1,spawnSpeed=800;
-let gameInterval,targetTimeout;
+/* =========================
+   ESTADO DO JOGO
+========================= */
+let score=0, time=30, level=1, spawnSpeed=800;
+let gameInterval=null, targetTimeout=null;
+let lastSaveAt=0; // anti-spam
 
-const el=id=>document.getElementById(id);
-const gameArea=el("gameArea");
+const el = id => document.getElementById(id);
+const gameArea = el("gameArea");
 
-el("btnPlay").onclick=startGame;
-el("btnReplay").onclick=startGame;
+/* =========================
+   CONTROLES
+========================= */
+el("btnPlay").onclick = startGame;
+el("btnReplay").onclick = startGame;
+el("btnSave").onclick = saveScore;
+el("btnShare").onclick = shareScore;
+el("btnResetLocal").onclick = () => {
+  localStorage.removeItem("rankingLocal");
+  loadLocalRanking();
+};
 
+/* =========================
+   JOGO
+========================= */
 function startGame(){
-  score=0;time=30;level=1;
+  if(!validateName()) return;
+
+  score=0; time=30; level=1; spawnSpeed=800;
   updateUI();
   el("endScreen").style.display="none";
+
+  clearInterval(gameInterval);
   spawnTarget();
 
-  gameInterval=setInterval(()=>{
+  gameInterval = setInterval(()=>{
     time--;
+    updateLevel();
     updateUI();
     if(time<=0) endGame();
   },1000);
 }
 
 function updateUI(){
-  el("score").innerText=score;
-  el("time").innerText=time;
+  el("score").innerText = score;
+  el("time").innerText = time;
+  el("level").innerText = level;
+}
+
+function updateLevel(){
+  if(score>=40) level=5;
+  else if(score>=30) level=4;
+  else if(score>=20) level=3;
+  else if(score>=10) level=2;
+  else level=1;
+
+  spawnSpeed = Math.max(200, 800 - (level*120));
 }
 
 function spawnTarget(){
   clearTimeout(targetTimeout);
-  const t=document.createElement("div");
+
+  const t = document.createElement("div");
   t.className="target";
 
-  const x=Math.random()*(gameArea.clientWidth-60);
-  const y=Math.random()*(gameArea.clientHeight-60);
+  const x = Math.random() * (gameArea.clientWidth - 64);
+  const y = Math.random() * (gameArea.clientHeight - 64);
 
-  t.style.left=x+"px";
-  t.style.top=y+"px";
+  t.style.left = x + "px";
+  t.style.top = y + "px";
 
-  t.onclick=(e)=>{
+  t.onclick = (e)=>{
     e.stopPropagation();
     score++;
     updateUI();
@@ -124,11 +241,15 @@ function spawnTarget(){
 
   gameArea.innerHTML="";
   gameArea.appendChild(t);
-  targetTimeout=setTimeout(spawnTarget,800);
+
+  targetTimeout = setTimeout(spawnTarget, spawnSpeed);
 }
 
-gameArea.addEventListener("click",()=>{
-  score=Math.max(0,score-1);
+// erro: clicar fora
+gameArea.addEventListener("click", ()=>{
+  score = Math.max(0, score-1);
+  document.body.classList.add("flash");
+  setTimeout(()=>document.body.classList.remove("flash"),120);
   updateUI();
 });
 
@@ -136,17 +257,135 @@ function endGame(){
   clearInterval(gameInterval);
   clearTimeout(targetTimeout);
   gameArea.innerHTML="";
-  el("finalScore").innerText=score;
+  el("finalScore").innerText = score;
   el("endScreen").style.display="block";
+  saveLocal(); // sempre salva local
+}
 
-  // 🔥 CARREGAR ANÚNCIO
+/* =========================
+   VALIDAÇÃO
+========================= */
+function validateName(){
+  const name = el("playerName").value.trim();
+  if(name.length < 2){
+    alert("Digite um nome válido (mín. 2 caracteres)");
+    return false;
+  }
+  return true;
+}
+
+/* =========================
+   RANKING LOCAL
+========================= */
+function saveLocal(){
+  const name = el("playerName").value.trim() || "Anônimo";
+  let arr = JSON.parse(localStorage.getItem("rankingLocal")||"[]");
+  arr.push({name, score, t:Date.now()});
+  arr.sort((a,b)=> b.score - a.score);
+  arr = arr.slice(0,10);
+  localStorage.setItem("rankingLocal", JSON.stringify(arr));
+  loadLocalRanking();
+}
+
+function loadLocalRanking(){
+  const arr = JSON.parse(localStorage.getItem("rankingLocal")||"[]");
+  const ul = el("rankingLocal");
+  ul.innerHTML="";
+  arr.forEach(r=>{
+    const li=document.createElement("li");
+    li.textContent = `${r.name} — ${r.score}`;
+    ul.appendChild(li);
+  });
+}
+
+/* =========================
+   RANKING GLOBAL (FIREBASE)
+========================= */
+async function saveScore(){
+  if(!validateName()) return;
+
+  // anti-spam: 1 envio a cada 10s
+  const now = Date.now();
+  if(now - lastSaveAt < 10000){
+    alert("Aguarde alguns segundos para enviar novamente.");
+    return;
+  }
+  lastSaveAt = now;
+
+  const name = el("playerName").value.trim();
+
   try{
-    (adsbygoogle = window.adsbygoogle || []).push({});
-  }catch(e){
-    console.log(e);
+    const { collection, addDoc } = window._fb;
+    await addDoc(collection(window.db, "ranking"), {
+      name, score, createdAt: new Date()
+    });
+    loadGlobalRanking();
+  }catch(err){
+    console.error(err);
+    alert("Erro ao salvar no ranking global.");
   }
 }
-</script>
 
+async function loadGlobalRanking(){
+  try{
+    const { collection, getDocs, query, orderBy, limit } = window._fb;
+    const q = query(
+      collection(window.db, "ranking"),
+      orderBy("score","desc"),
+      limit(10)
+    );
+    const snap = await getDocs(q);
+    const ul = el("rankingGlobal");
+    ul.innerHTML="";
+    snap.forEach(doc=>{
+      const r = doc.data();
+      const li=document.createElement("li");
+      li.textContent = `${r.name} — ${r.score}`;
+      ul.appendChild(li);
+    });
+  }catch(e){
+    console.warn("Falha ao carregar global (ok no offline).");
+  }
+}
+
+/* =========================
+   COMPARTILHAR
+========================= */
+function shareScore(){
+  const text = `🔥 Fiz ${score} pontos no Reflexo Extremo PRO! Consegue bater?`;
+  if(navigator.share){
+    navigator.share({ title:"Reflexo Extremo PRO", text, url:location.href });
+  }else{
+    const url = `https://wa.me/?text=${encodeURIComponent(text+" "+location.href)}`;
+    window.open(url, "_blank");
+  }
+}
+
+/* =========================
+   INIT
+========================= */
+loadLocalRanking();
+setTimeout(loadGlobalRanking, 1200);
+
+/* =========================
+   PWA BÁSICO (instalável)
+========================= */
+// cria manifest em runtime (mantém 1 arquivo só)
+const manifest = {
+  name: "Reflexo Extremo PRO",
+  short_name: "Reflexo",
+  start_url: ".",
+  display: "standalone",
+  background_color: "#0f172a",
+  theme_color: "#0f172a",
+  icons: []
+};
+const blob = new Blob([JSON.stringify(manifest)], {type:'application/json'});
+const url = URL.createObjectURL(blob);
+const link = document.createElement('link');
+link.rel = 'manifest';
+link.href = url;
+document.head.appendChild(link);
+</script>
 </body>
 </html>
