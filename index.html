@@ -6,6 +6,11 @@
 <title>Reflexo Extremo PRO</title>
 <meta name="theme-color" content="#0f172a" />
 
+<script async 
+src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5503435586364378"
+crossorigin="anonymous">
+</script>
+
 <style>
 :root{
   --bg:#0f172a; --panel:#020617; --border:#1e293b;
@@ -119,7 +124,16 @@ li:last-child{border-bottom:none}
     <h2>Fim de jogo</h2>
     <p>Score: <strong id="finalScore">0</strong></p>
 
-    <div id="adBox">🔥 Espaço para AdSense (insira seu script aqui)</div>
+<!-- GameOverAd -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5503435586364378"
+     data-ad-slot="8857490803"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 
     <div class="controls">
       <button id="btnSave">Salvar Ranking Global</button>
@@ -259,6 +273,11 @@ function endGame(){
   gameArea.innerHTML="";
   el("finalScore").innerText = score;
   el("endScreen").style.display="block";
+try {
+    (adsbygoogle = window.adsbygoogle || []).push({});
+} catch(e) {
+    console.log("AdSense já carregado");
+}
   saveLocal(); // sempre salva local
 }
 
